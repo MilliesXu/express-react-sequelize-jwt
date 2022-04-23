@@ -78,23 +78,10 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route GET /api/usere/me
 // @access public
 const getMe = asyncHandler(async (req, res) => {
-  const user = await User.findOne(
-    {
-      where: {
-        id: req.user.id,
-      },
-    },
-    {
-      attributes: {
-        exclude: ["password"],
-      },
-    }
-  );
-
   return res.json({
-    _id: user.id,
-    name: user.name,
-    email: user.email,
+    _id: req.user.id,
+    name: req.user.name,
+    email: req.user.email,
   });
 });
 

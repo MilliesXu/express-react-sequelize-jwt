@@ -24,7 +24,7 @@ const setGoals = asyncHandler(async (req, res) => {
     user_id: req.user.id,
   });
 
-  res.status(200).json({ message: "Successfully create goal" });
+  res.status(200).json(goals);
 });
 
 // @desc    Update Goals
@@ -47,9 +47,12 @@ const updateGoals = asyncHandler(async (req, res) => {
     throw new Error("User not authorized");
   }
 
-  await Goal.update({ text: req.body.text }, { where: { id: req.params.id } });
+  const updateGoal = await Goal.update(
+    { text: req.body.text },
+    { where: { id: req.params.id } }
+  );
 
-  res.status(200).json({ message: `Updated goals` });
+  res.status(200).json({ updateGoal });
 });
 
 // @desc    Delete Goals
@@ -74,7 +77,7 @@ const deleteGoals = asyncHandler(async (req, res) => {
 
   await Goal.destroy({ where: { id: req.params.id } });
 
-  res.status(200).json({ message: `Delete goals ${req.params.id}` });
+  res.status(200).json(goal);
 });
 
 module.exports = {
